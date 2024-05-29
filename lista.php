@@ -40,7 +40,10 @@ $result = $dbconn->query($sql);
                         <td>{$row["nev"]}</td>
                         <td>{$row["email"]}</td>
                         <td>{$row["mobil"]}</td>
-                        <td>kexmester</td>
+                        <td>
+                            <a>Módosítás</a>
+                            <a>Törlés</a>
+                        </td>
                     </tr>
                     ";
                 }
