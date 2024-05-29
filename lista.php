@@ -41,8 +41,8 @@ $result = $dbconn->query($sql);
                         <td>{$row["email"]}</td>
                         <td>{$row["mobil"]}</td>
                         <td>
-                            <a>Módosítás</a>
-                            <a>Törlés</a>
+                            <a href=\"modositas.php?id={$row['id']}\">Módosítás</a> <b>|</b>
+                            <a href=\"torles.php?id={$row['id']}\">Törlés</a>
                         </td>
                     </tr>
                     ";
