@@ -3,14 +3,13 @@ require("kapcsolat.php");
 $nev = "";
 $mobil = "";
 $email = "";
+$id = 0;
 
 if (isset($_GET["id"]))
 {
     $id = $_GET["id"];
-
-    $sql = "SELECT * FROM dolgozok WHERE id like {$_GET['id']}";
-    $res = $dbconn->query($sql)->fetch_all(MYSQLI_ASSOC);
-    
+    $sql = "SELECT * FROM dolgozok WHERE id = {$_GET['id']};";
+    $res = $dbconn->query($sql)->fetch_all(MYSQLI_ASSOC)[0];
     if (isset($res))
     {
         $nev = $res["nev"];
@@ -19,8 +18,12 @@ if (isset($_GET["id"]))
     }
 }
 
-if(false)
+if(isset($_GET["update"]))
 {
+    $id = $_GET["id"];
+    $nev = $_POST["nev"];
+    $email = $_POST["email"];
+    $mobil = $_POST["mobil"];
     $sql = "UPDATE dolgozok SET nev = '{$nev}', email = '{$email}', mobil = '{$mobil}' WHERE id = {$id};";
     $dbconn->query($sql);
     header("Location: lista.php");
@@ -42,7 +45,7 @@ if(false)
 <body>
     <div class="container">
         <?php
-        echo "<form method=\"post\">
+        echo "<form method=\"post\" action=\"modositas.php?update=1&id={$id}\">
         <label for=\"nev\">Név</label>
         <input type=\"text\" name=\"nev\" id=\"nev\" value={$nev}> <br>
         <label for=\"mobil\">Mobil</label>

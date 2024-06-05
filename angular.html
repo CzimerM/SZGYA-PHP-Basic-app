@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link rel="stylesheet" href="stilus.css">
+</head>
+
+<body ng-app="phpTest" ng-controller="phpTestController">
+    <div class="container">
+        <h1>Dolgozók</h1>
+        <form method="post">
+            <input type="search" name="kifejezes" id="kifejezes">
+            <p><a href="felvitel.php">Új dolgozó felvitele</a></p>
+            <!-- ide kerül a php kimenet -->
+        </form>
+        <table>
+            <tr>
+                <th>Név</th>
+                <th>Email</th>
+                <th>Mobil</th>
+                <th>Művelet</th>
+            </tr>
+            <tr ng-repeat="dolgozo in dolgozok">
+                <td>{{dolgozo.nev}}</td>
+                <td>{{dolgozo.email}}</td>
+                <td>{{dolgozo.mobil}}</td>
+                <td>
+                    <a href={{"modositas.php?id=" + dolgozo.id}}>Módosítás</a> <b>|</b>
+                    <a href={{"torles.php?id=" +  dolgozo.id}}>Törlés</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        let app = angular.module('phpTest', []);
+        app.controller('phpTestController', function ($scope, $http) {
+            $scope.dolgozok = []
+            $http.get("vegpont.php").then((res) => {
+                $scope.dolgozok = res.data;
+            });
+        });
+    </script>
+</body>
+
+</html>

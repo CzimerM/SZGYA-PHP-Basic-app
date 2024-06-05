@@ -24,13 +24,14 @@ $result = $dbconn->query($sql);
             <input type="search" name="kifejezes" id="kifejezes">
             <p><a href="felvitel.php">Új dolgozó felvitele</a></p>
             <!-- ide kerül a php kimenet -->
-            <table>
-                <tr>
-                    <th>Név</th>
-                    <th>Email</th>
-                    <th>Mobil</th>
-                    <th>Művelet</th>
-                </tr>
+        </form>
+        <table>
+            <tr>
+                <th>Név</th>
+                <th>Email</th>
+                <th>Mobil</th>
+                <th>Művelet</th>
+            </tr>
             <?php
             if ($result->num_rows > 0) {
                 // output data of each row
@@ -47,13 +48,11 @@ $result = $dbconn->query($sql);
                     </tr>
                     ";
                 }
-            } 
-            else {
+            } else {
                 echo "0 results";
             }
             ?>
-            </table>
-        </form>
+        </table>
     </div>
 </body>
 
