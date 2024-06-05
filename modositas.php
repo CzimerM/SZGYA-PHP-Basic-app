@@ -21,9 +21,27 @@ if (isset($_GET["id"]))
 if(isset($_GET["update"]))
 {
     $id = $_GET["id"];
-    $nev = $_POST["nev"];
-    $email = $_POST["email"];
-    $mobil = $_POST["mobil"];
+
+    $nev = htmlspecialchars(trim(ucwords(strtolower($_POST["nev"]))));
+    $mobil = htmlspecialchars(trim($_POST["mobil"]));
+    $email = htmlspecialchars(trim(strtolower($_POST["email"])));
+
+    $errs = [];
+
+    if (empty($nev))
+    {
+        array_push($errs, "Nem adott meg nevet!");
+    }
+
+    if(!(count($errs) === 0))
+    {
+        foreach($errs as $err)
+        {
+            echo $err;
+        }
+        die();
+    }
+
     $sql = "UPDATE dolgozok SET nev = '{$nev}', email = '{$email}', mobil = '{$mobil}' WHERE id = {$id};";
     $dbconn->query($sql);
     header("Location: lista.php");

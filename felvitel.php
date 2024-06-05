@@ -3,9 +3,25 @@ require("kapcsolat.php");
 
 if (isset($_POST["nev"]))
 {
-    $nev = $_POST["nev"];
-    $mobil = $_POST["mobil"];
-    $email = $_POST["email"];
+    $nev = htmlspecialchars(trim(ucwords(strtolower($_POST["nev"]))));
+    $mobil = htmlspecialchars(trim($_POST["mobil"]));
+    $email = htmlspecialchars(trim(strtolower($_POST["email"])));
+
+    $errs = [];
+
+    if (empty($nev))
+    {
+        array_push($errs, "Nem adott meg nevet!");
+    }
+
+    if(!(count($errs) === 0))
+    {
+        foreach($errs as $err)
+        {
+            echo $err;
+        }
+        die();
+    }
 
     $sql = "INSERT INTO `dolgozok` (`id`, `nev`, `email`, `mobil`) VALUES (NULL, '{$nev}', '{$email}', '{$mobil}');";
     $dbconn->query($sql);
