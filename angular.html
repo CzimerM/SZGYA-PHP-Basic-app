@@ -13,7 +13,7 @@
     <div class="container">
         <h1>Dolgozók</h1>
         <form method="post">
-            <input type="search" name="kifejezes" id="kifejezes">
+            <input type="search" ng-model="kifejezes" id="kifejezes">
             <p><a href="felvitel.php">Új dolgozó felvitele</a></p>
             <!-- ide kerül a php kimenet -->
         </form>
@@ -24,13 +24,13 @@
                 <th>Mobil</th>
                 <th>Művelet</th>
             </tr>
-            <tr ng-repeat="dolgozo in dolgozok">
+            <tr ng-repeat="dolgozo in dolgozok | filter: kifejezes">
                 <td>{{dolgozo.nev}}</td>
                 <td>{{dolgozo.email}}</td>
                 <td>{{dolgozo.mobil}}</td>
                 <td>
-                    <a href={{"modositas.php?id=" + dolgozo.id}}>Módosítás</a> <b>|</b>
-                    <a href={{"torles.php?id=" +  dolgozo.id}}>Törlés</a>
+                    <a href="modositas.php?id={{dolgozo.id}}">Módosítás</a> <b>|</b>
+                    <a href="torles.php?id={{dolgozo.id}}">Törlés</a>
                 </td>
             </tr>
         </table>
@@ -38,7 +38,8 @@
     <script>
         let app = angular.module('phpTest', []);
         app.controller('phpTestController', function ($scope, $http) {
-            $scope.dolgozok = []
+            $scope.dolgozok = [];
+            $scope.kifejezes = "";
             $http.get("vegpont.php").then((res) => {
                 $scope.dolgozok = res.data;
             });
